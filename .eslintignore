@@ -1,0 +1,3 @@
+# eslint在做风格检查的时候忽略 dist 和 vender 不去检查。 
+/dist
+/src/vender
