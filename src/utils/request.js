@@ -16,7 +16,7 @@ const instance = axios.create({
 })
 
 // 2. 请求拦截器，如果有token进行头部携带
-instance.interceptors.requestu.use(config => {
+instance.interceptors.request.use(config => {
   // 修改请求配置
   // 如果本地有token就在头部携带
   const { profile } = store.state.user // 获取到用户信息对象

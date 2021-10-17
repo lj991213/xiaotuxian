@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <h1>app</h1>
-    名称:{{$store.state.user.profile.nickname}}
-    <button @click="$store.commit('user/setUser',{nickname: '水儿'})">添加</button>
-  </div>
+  <!-- 一级路由 -->
+  <router-view />
 </template>
 
 <script>
+// import request from '@/utils/request'
 export default {
-
+  name: 'App',
+  setup () {
+  }
 }
 </script>
 
