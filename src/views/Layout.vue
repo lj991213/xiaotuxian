@@ -1,12 +1,12 @@
 <template>
   <!-- 顶部通栏 -->
-  <nav>顶部通栏</nav>
+  <app-navbar />
   <!-- 头部组件 -->
-  <header>头部组件</header>
+  <app-header />
   <!-- 内容容器 -->
   <div class="mian">
     <!-- 二级路由 -->
-    HomePage
+    <home></home>
     <router-view />
   </div>
   <!-- 底部组件 -->
@@ -14,8 +14,19 @@
 </template>
 
 <script>
+import Home from './home/index.vue'
+import AppNavbar from '@/components/app-navbar.vue'
+import AppHeader from '@/components/app-header.vue'
+
 export default {
-  name: 'Layout'
+  name: 'Layout',
+  components: {
+    Home,
+    AppNavbar,
+    AppHeader
+  },
+  setup () {
+  }
 }
 </script>
 
