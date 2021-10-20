@@ -1,38 +1,62 @@
 <template>
   <ul class="app-header-nav">
     <li class="home">
-      <RouterLink to="/">首页</RouterLink>
+      <router-link to="/">首页</router-link>
     </li>
-    <li><a href="#">美食</a>
-      <!-- 二级导航 -->
-      <div class="layer">
+
+    <!-- 商品名称 -->
+    <li v-for="item in list"
+        :key="item.id"
+        @mouseenter="show(item)"
+        @mouseleave="hide(item)">
+      <!-- 一级分类 跳转到分类 -->
+      <router-link :to="`/category/${item.id}`"
+                   @click="hide(item)">{{item.name}}</router-link>
+      <!-- 二级分类导航  -->
+      <!-- 动态添加类 item.open控制显示隐藏 -->
+      <div class="layer"
+           v-bind:class="{open:item.open}">
         <ul>
-          <li v-for="i in 5"
-              :key="i">
-            <a href="#">
-              <img src="http://zhoushugang.gitee.io/erabbit-client-pc-static/uploads/img/category%20(4).png"
+          <!-- 子分类集合 children -->
+          <li v-for="sub in item.children"
+              :key="sub.id">
+            <!-- 跳转到推荐商品页面 -->
+            <router-link :to="`/category/sub/${sub.id}`"
+                         @click="hide(item)">
+              <!-- 子分类图片名称 -->
+              <img :src="sub.picture"
                    alt="">
-              <p>水果</p>
-            </a>
+              <p>{{sub.name}}</p>
+            </router-link>
           </li>
         </ul>
       </div>
     </li>
-    <li><a href="#">餐厨</a></li>
-    <li><a href="#">艺术</a></li>
-    <li><a href="#">电器</a></li>
-    <li><a href="#">居家</a></li>
-    <li><a href="#">洗护</a></li>
-    <li><a href="#">孕婴</a></li>
-    <li><a href="#">服装</a></li>
-    <li><a href="#">杂货</a></li>
   </ul>
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 export default {
   // 头部分类导航
-  name: 'AppHeader'
+  name: 'AppHeaderNav',
+  setup () {
+    const store = useStore()
+    // vuex中拿到首页分类列表
+    const list = computed(() => {
+      return store.state.category.list
+    })
+    // 显示二级导航条
+    const show = (item) => {
+      store.commit('category/show', item.id)
+    }
+    // 隐藏二级导航条
+    const hide = (item) => {
+      store.commit('category/hide', item.id)
+    }
+    return { list, show, hide }
+  }
 }
 </script>
 
@@ -43,30 +67,43 @@ export default {
   padding-left: 40px;
   position: relative;
   z-index: 998;
-  li {
+  > li {
     margin-right: 40px;
     width: 38px;
     text-align: center;
-    a {
+    // position: relative;
+    > a {
       font-size: 16px;
       line-height: 32px;
       height: 32px;
       display: inline-block;
     }
     &:hover {
-      a {
+      > a {
         color: @xtxColor;
         border-bottom: 1px solid @xtxColor;
+        position: relative;
       }
-      .layer {
-        height: 132px;
-        opacity: 1;
+      // hove距离二级导航有间隙 添加一个after
+      > ::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: -400%;
+        width: 800%;
+        height: 80%;
+        // background-color: red;
+        z-index: 9999;
       }
     }
   }
 }
 // 二级导航定位
 .layer {
+  &.open {
+    height: 132px;
+    opacity: 1;
+  }
   width: 1240px;
   background-color: #fff;
   position: absolute;
