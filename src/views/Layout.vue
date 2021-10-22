@@ -3,6 +3,8 @@
   <app-navbar />
   <!-- 头部组件 -->
   <app-header />
+    <!-- 吸顶头部 -->
+  <app-header-sticky/>
   <!-- 内容容器 -->
   <div class="mian">
     <!-- 二级路由 -->
@@ -16,6 +18,7 @@
 import AppNavbar from '@/components/app-navbar.vue'
 import AppHeader from '@/components/app-header.vue'
 import AppFooter from '@/components/app-footer.vue'
+import AppHeaderSticky from '@/components/app-header-sticky.vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -23,7 +26,8 @@ export default {
   components: {
     AppNavbar,
     AppHeader,
-    AppFooter
+    AppFooter,
+    AppHeaderSticky
   },
   setup () {
     const store = useStore()

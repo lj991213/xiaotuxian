@@ -1,19 +1,22 @@
 <template>
   <div class="container">
-    哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈
-    HomePage
+    <home-category />
   </div>
 </template>
 
 <script>
+import HomeCategory from './components/home-category.vue'
 export default {
-  name: 'HomePage'
+  name: 'HomePage',
+  components: {
+    HomeCategory
+  }
 }
 </script>
 
 <style lang="less" scoped>
 .container {
-  background: @xtxColor;
-  .hoverShadow();
+  // background: @xtxColor;
+  // .hoverShadow();
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="container">
       <!-- logo模块 -->
       <h1 class="logo">
-        <RouterLink to="/">小兔鲜</RouterLink>
+        <router-link to="/">小兔鲜</router-link>
       </h1>
       <!-- 导航 -->
       <app-headernav />
