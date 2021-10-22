@@ -1,11 +1,15 @@
 <template>
-  <div class='home-category'>
+  <div class='home-category'
+       @mouseleave="categoryId=null">
     <ul class="menu">
       <!-- 定义一个数据记录当前鼠标经过分类的ID，使用计算属性得到当前的分类推荐商品数据 -->
+      <!-- 动态绑定active 决定左侧分类的hover激活样式颜色  -->
       <li v-for="item in menuList "
           :key="item.id"
-          @mouseenter="categoryId=item.id">
-        <router-link :to="`/category/${item.id}`">{{item.name}}</router-link>
+          @mouseenter="categoryId=item.id"
+          :class="{active:categoryId===item.id}">
+        <router-link :to="
+          `/category/${item.id}`">{{item.name}}</router-link>
         <!-- item.children有值时才遍历 -->
         <template v-if="item.children">
           <router-link v-for="sub in item.children"
@@ -17,7 +21,7 @@
     </ul>
     <!-- 弹层 -->
     <div class="layer">
-      <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
+      <h4 v-if="currCategory">{{currCategory.id==='brand'?'品牌':'分类'}}推荐 <small>根据您的购买或浏览记录推荐</small></h4>
       <ul v-if="currCategory && currCategory.goods && currCategory.goods.length">
         <li v-for="item in currCategory.goods"
             :key="item.id">
@@ -32,6 +36,21 @@
           </RouterLink>
         </li>
       </ul>
+      <ul v-if="currCategory && currCategory.brands && currCategory.brands.length">
+        <li class="brand"
+            v-for="item in currCategory.brands"
+            :key="item.id">
+          <RouterLink to="/">
+            <img :src="item.picture"
+                 alt="">
+            <div class="info">
+              <p class="place"><i class="iconfont icon-dingwei"></i>{{item.place}}</p>
+              <p class="name ellipsis">{{item.name}}</p>
+              <p class="desc ellipsis-2">{{item.desc}}</p>
+            </div>
+          </RouterLink>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -39,6 +58,8 @@
 <script>
 import { useStore } from 'vuex'
 import { reactive, ref, computed } from 'vue'
+import { findBrand } from '@/api/home.js'
+
 export default {
   name: 'HomeCategory',
   // 使用vuex的一级分类数据9个分类+品牌，需要两个二级分类
@@ -48,7 +69,9 @@ export default {
     const brand = reactive({
       id: 'brand',
       name: '品牌',
-      children: [{ id: 'brand-chilren', name: '品牌推荐' }]
+      children: [{ id: 'brand-chilren', name: '品牌推荐' }],
+      // 品牌弹窗
+      brands: []
     })
 
     const menuList = computed(() => {
@@ -67,9 +90,14 @@ export default {
     })
     // 得到弹出层的商品数据
     const categoryId = ref(null)
+    // 当前分类
     const currCategory = computed(() => {
       // 拿到当前分类的id和记录的id
       return menuList.value.find(item => item.id === categoryId.value)
+    })
+    // 获取品牌brand数据
+    findBrand().then(data => {
+      brand.brands = data.result.slice(0, 6)
     })
     return { menuList, categoryId, currCategory }
   }
@@ -88,7 +116,9 @@ export default {
       padding-left: 30px;
       height: 50px;
       line-height: 50px;
-      &:hover {
+
+      &:hover,
+      &.active {
         background: @xtxColor;
       }
       a {
@@ -167,6 +197,24 @@ export default {
               i {
                 font-size: 16px;
               }
+            }
+          }
+        }
+      }
+      li.brand {
+        height: 180px;
+        a {
+          align-items: flex-start;
+          img {
+            width: 120px;
+            height: 160px;
+          }
+          .info {
+            p {
+              margin-top: 8px;
+            }
+            .place {
+              color: #999;
             }
           }
         }
