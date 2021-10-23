@@ -20,9 +20,9 @@
         <!-- 骨架屏 -->
         <template v-else>
           <n-skeleton text
-                      style="width:70px;height:18px;margin-right:5px;border-radius:3px" />
+                      style="width:70px;height:18px;margin-right:5px;border-radius:3px;" />
           <n-skeleton text
-                      style="width:60px;height:18px;border-radius:3px" />
+                      style="width:60px;height:18px;border-radius:3px;" />
         </template>
       </li>
     </ul>

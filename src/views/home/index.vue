@@ -7,17 +7,25 @@
       <home-banner />
     </div>
   </div>
+  <!-- 新鲜好物 -->
+  <home-new />
+  <!-- 人气推荐 -->
+  <home-hot />
 </template>
 
 <script>
 import HomeCategory from './components/home-category.vue'
 import HomeBanner from './components/home-banner.vue'
+import homeNew from './components/home-new.vue'
+import homeHot from './components/home-hot.vue'
 
 export default {
   name: 'HomePage',
   components: {
     HomeCategory,
-    HomeBanner
+    HomeBanner,
+    homeNew,
+    homeHot
   }
 }
 </script>

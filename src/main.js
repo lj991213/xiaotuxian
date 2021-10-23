@@ -6,5 +6,6 @@ import store from './store'
 import 'normalize.css'
 // 自己项目的重置样式和公共样式
 import '@/assets/styles/common.less'
+import ui from './components/library'
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App).use(store).use(router).use(ui).mount('#app')
