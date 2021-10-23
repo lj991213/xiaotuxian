@@ -17,6 +17,13 @@
                        :to="`/category/sub/${sub.id}`">{{sub.name}}
           </router-link>
         </template>
+        <!-- 骨架屏 -->
+        <template v-else>
+          <n-skeleton text
+                      style="width:70px;height:18px;margin-right:5px;border-radius:3px" />
+          <n-skeleton text
+                      style="width:60px;height:18px;border-radius:3px" />
+        </template>
       </li>
     </ul>
     <!-- 弹层 -->
@@ -59,9 +66,13 @@
 import { useStore } from 'vuex'
 import { reactive, ref, computed } from 'vue'
 import { findBrand } from '@/api/home.js'
+import { NSkeleton } from 'naive-ui'
 
 export default {
   name: 'HomeCategory',
+  components: {
+    NSkeleton
+  },
   // 使用vuex的一级分类数据9个分类+品牌，需要两个二级分类
   setup () {
     const store = useStore()

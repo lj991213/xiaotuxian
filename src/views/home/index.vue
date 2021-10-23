@@ -6,6 +6,7 @@
 
 <script>
 import HomeCategory from './components/home-category.vue'
+
 export default {
   name: 'HomePage',
   components: {

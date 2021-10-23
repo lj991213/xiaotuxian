@@ -11,6 +11,7 @@
     "@vueuse/core": "^4.11.2",
     "axios": "^0.23.0",
     "core-js": "^3.6.5",
+    "date-fns": "^2.25.0",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
@@ -35,7 +36,9 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "lint-staged": "^9.5.0",
+    "naive-ui": "^2.19.11",
     "style-resources-loader": "^1.4.1",
+    "vfonts": "^0.1.0",
     "vue-cli-plugin-style-resources-loader": "~0.1.5"
   },
   "gitHooks": {
