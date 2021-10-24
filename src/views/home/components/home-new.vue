@@ -6,17 +6,25 @@
         <XtxMore path="/" />
       </template>
       <!-- 面板内容 -->
-      <ul class="goods-list">
-        <li v-for="item in goods"
-            :key="item.id">
-          <router-link :to="`/product/${item.id}`">
-            <img :src="item.picture"
-                 alt="">
-            <p class="name ellipsis">{{item.name}}</p>
-            <p class="price">&yen;{{item.price}}</p>
-          </router-link>
-        </li>
-      </ul>
+      <div style="position: relative;height: 426px;">
+        <!-- 动画的父容器需要定位，防止定位跑偏 -->
+        <transition name="fade">
+          <ul v-if="goods.length"
+              class="goods-list">
+            <li v-for="item in goods"
+                :key="item.id">
+              <router-link :to="`/product/${item.id}`">
+                <img :src="item.picture"
+                     alt="">
+                <p class="name ellipsis">{{item.name}}</p>
+                <p class="price">&yen;{{item.price}}</p>
+              </router-link>
+            </li>
+          </ul>
+          <!-- 骨架 未完成加载 -->
+          <home-skeleton v-else />
+        </transition>
+      </div>
     </HomePanel>
   </div>
 </template>
@@ -25,10 +33,14 @@
 import { ref } from 'vue'
 import HomePanel from './home-panel'
 import { findNew } from '@/api/home.js'
+import HomeSkeleton from './home-skeleton.vue'
 
 export default {
   name: 'HomeNew',
-  components: { HomePanel },
+  components: {
+    HomePanel,
+    HomeSkeleton
+  },
   setup () {
     const goods = ref([])
     findNew().then(data => {
