@@ -6,7 +6,8 @@
         <XtxMore path="/" />
       </template>
       <!-- 面板内容 -->
-      <div style="position: relative;height: 426px;">
+      <div ref="target"
+           style="position:relative; height:426px;">
         <!-- 动画的父容器需要定位，防止定位跑偏 -->
         <transition name="fade">
           <ul v-if="goods.length"
@@ -34,6 +35,7 @@ import { ref } from 'vue'
 import HomePanel from './home-panel'
 import { findNew } from '@/api/home.js'
 import HomeSkeleton from './home-skeleton.vue'
+import { useLazyDate } from '@/hooks/index.js'
 
 export default {
   name: 'HomeNew',
@@ -42,11 +44,13 @@ export default {
     HomeSkeleton
   },
   setup () {
-    const goods = ref([])
-    findNew().then(data => {
-      goods.value = data.result
-    })
-    return { goods }
+    const target = ref(null)
+    // const goods = ref([])
+    // findNew().then(data => {
+    //   goods.value = data.result
+    // })
+    const result = useLazyDate(target, findNew)
+    return { goods: result, target }
   }
 }
 </script>

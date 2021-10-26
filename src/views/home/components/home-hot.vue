@@ -2,7 +2,8 @@
   <HomePanel title="人气推荐"
              sub-title="人气爆款 不容错过">
     <!-- 动画的父容器需要定位，防止定位跑偏 -->
-    <div style="position:relative; height:426px;">
+    <div ref="target"
+         style="position:relative; height:426px;">
       <ul ref="pannel"
           class="goods-list"
           v-if="goods.length">
@@ -26,16 +27,19 @@ import { ref } from 'vue'
 import HomePanel from './home-panel'
 import { findHot } from '@/api/home.js'
 import HomeSkeleton from './home-skeleton.vue'
+import { useLazyDate } from '@/hooks/index.js'
 
 export default {
   name: 'HomeNew',
   components: { HomePanel, HomeSkeleton },
   setup () {
-    const goods = ref([])
-    findHot().then(data => {
-      goods.value = data.result
-    })
-    return { goods }
+    const target = ref(null)
+    // const goods = ref([])
+    // findHot().then(data => {
+    //   goods.value = data.result
+    // })
+    const result = useLazyDate(target, findHot)
+    return { goods: result, target }
   }
 }
 </script>
