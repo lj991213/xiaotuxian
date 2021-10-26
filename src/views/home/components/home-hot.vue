@@ -23,22 +23,20 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import HomePanel from './home-panel'
 import { findHot } from '@/api/home.js'
 import HomeSkeleton from './home-skeleton.vue'
-import { useLazyDate } from '@/hooks/index.js'
+import { useLazyData } from '@/hooks/index.js'
 
 export default {
   name: 'HomeNew',
   components: { HomePanel, HomeSkeleton },
   setup () {
-    const target = ref(null)
     // const goods = ref([])
     // findHot().then(data => {
     //   goods.value = data.result
     // })
-    const result = useLazyDate(target, findHot)
+    const { target, result } = useLazyData(findHot)
     return { goods: result, target }
   }
 }

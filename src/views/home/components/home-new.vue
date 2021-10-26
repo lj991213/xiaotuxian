@@ -31,11 +31,10 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import HomePanel from './home-panel'
 import { findNew } from '@/api/home.js'
 import HomeSkeleton from './home-skeleton.vue'
-import { useLazyDate } from '@/hooks/index.js'
+import { useLazyData } from '@/hooks/index.js'
 
 export default {
   name: 'HomeNew',
@@ -44,12 +43,13 @@ export default {
     HomeSkeleton
   },
   setup () {
-    const target = ref(null)
     // const goods = ref([])
     // findNew().then(data => {
     //   goods.value = data.result
     // })
-    const result = useLazyDate(target, findNew)
+    // target 绑定监听对象dom
+    // result 传入api函数 返回响应式数据
+    const { target, result } = useLazyData(findNew)
     return { goods: result, target }
   }
 }

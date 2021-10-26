@@ -13,7 +13,7 @@
 <script>
 import { NSkeleton } from 'naive-ui'
 export default {
-  // 新鲜人气骨架屏
+  // 新鲜 人气 骨架屏
   name: 'HomeSkeleton',
   components: {
     NSkeleton

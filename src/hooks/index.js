@@ -5,8 +5,8 @@ import { useIntersectionObserver } from '@vueuse/core'
  * @param {Element} target - dom对象 监听谁
  * @param {function} apifn - api函数
  */
-
-export const useLazyDate = (target, apiFn) => {
+export const useLazyData = (apiFn) => {
+  const target = ref(null)
   const result = ref([])
   // stop 停止观察
   const { stop } = useIntersectionObserver(
@@ -23,5 +23,5 @@ export const useLazyDate = (target, apiFn) => {
       }
     }
   )
-  return result
+  return { result, target }
 }
