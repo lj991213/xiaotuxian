@@ -29,8 +29,16 @@ export const findNew = () => {
 
 /**
  * 人气推荐
- * @returns Primise
+ * @returns Promise
  */
 export const findHot = () => {
   return request('home/hot', 'get')
+}
+
+/**
+ * 商品区块
+ * @returns Promise
+ */
+export const findGoods = () => {
+  return request('home/goods', 'get')
 }
